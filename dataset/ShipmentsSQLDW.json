@@ -1,0 +1,14 @@
+{
+	"name": "ShipmentsSQLDW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseLS",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "[SalesLT].[Product]"
+		}
+	}
+}

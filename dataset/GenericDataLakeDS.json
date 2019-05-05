@@ -1,0 +1,42 @@
+{
+	"name": "GenericDataLakeDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageGen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ADLSDirectory": {
+				"type": "string"
+			},
+			"ADLSFile": {
+				"type": "string"
+			},
+			"ADLSContainer": {
+				"type": "string"
+			}
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().ADLSFile",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().ADLSDirectory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().ADLSContainer",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

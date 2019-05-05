@@ -1,0 +1,79 @@
+{
+	"name": "ProductsSAPDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "OwnerId",
+				"type": "String"
+			},
+			{
+				"name": "IsDeleted",
+				"type": "Boolean"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "CreatedById",
+				"type": "String"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "LastModifiedById",
+				"type": "String"
+			},
+			{
+				"name": "SystemModstamp",
+				"type": "DateTime"
+			},
+			{
+				"name": "AccountKey__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Account_Owner__c",
+				"type": "String"
+			},
+			{
+				"name": "Account_Type__c",
+				"type": "String"
+			},
+			{
+				"name": "Country__c",
+				"type": "String"
+			},
+			{
+				"name": "Region__c",
+				"type": "String"
+			},
+			{
+				"name": "Rank_This_Year__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Rank_Last_Year__c",
+				"type": "Decimal"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "DimAccount__c"
+		}
+	}
+}

@@ -1,0 +1,51 @@
+{
+	"name": "SupplyChainAnalytics",
+	"properties": {
+		"description": "Supply Chain Analytics Data Flow",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ShipmentsDataLakeDS",
+						"type": "DatasetReference"
+					},
+					"name": "ShipmentTxns",
+					"description": "Import data from ShipmentTrends",
+					"script": "source(output(\n\t\tVendorID as string,\n\t\tlpep_pickup_datetime as string,\n\t\tLpep_dropoff_datetime as string,\n\t\tStore_and_fwd_flag as string,\n\t\tRateCodeID as string,\n\t\tPickup_longitude as string,\n\t\tPickup_latitude as string,\n\t\tDropoff_longitude as string,\n\t\tDropoff_latitude as string,\n\t\tPassenger_count as string,\n\t\tTrip_distance as string,\n\t\tFare_amount as string,\n\t\tExtra as string,\n\t\tMTA_tax as string,\n\t\tTip_amount as string,\n\t\tTolls_amount as string,\n\t\tEhail_fee as string,\n\t\timprovement_surcharge as string,\n\t\tTotal_amount as string,\n\t\tPayment_type as string,\n\t\tTrip_type as string,\n\t\tPULocationID as string,\n\t\tDOLocationID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpreferredIntegralType: 'none',\n\tpreferredFractionalType: 'none') ~> ShipmentTxns"
+				},
+				{
+					"dataset": {
+						"referenceName": "ShipmentsDataLakeDS",
+						"type": "DatasetReference"
+					},
+					"name": "Accounts",
+					"description": "Import data from Accounts",
+					"script": "source(output(\n\t\tVendorID as string,\n\t\tlpep_pickup_datetime as string,\n\t\tLpep_dropoff_datetime as string,\n\t\tStore_and_fwd_flag as string,\n\t\tRateCodeID as string,\n\t\tPickup_longitude as string,\n\t\tPickup_latitude as string,\n\t\tDropoff_longitude as string,\n\t\tDropoff_latitude as string,\n\t\tPassenger_count as string,\n\t\tTrip_distance as string,\n\t\tFare_amount as string,\n\t\tExtra as string,\n\t\tMTA_tax as string,\n\t\tTip_amount as string,\n\t\tTolls_amount as string,\n\t\tEhail_fee as string,\n\t\timprovement_surcharge as string,\n\t\tTotal_amount as string,\n\t\tPayment_type as string,\n\t\tTrip_type as string,\n\t\tPULocationID as string,\n\t\tDOLocationID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Accounts"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ShipmentsSQLDS",
+						"type": "DatasetReference"
+					},
+					"name": "ShipTrendsDWSink",
+					"description": "Export data to TrendsPerShipTxnDWSink",
+					"script": "ShipTrendsPerAccount sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'table',\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false) ~> ShipTrendsDWSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectShipTxnsCols",
+					"description": "Select Columns",
+					"script": "ShipmentTxns select()~> SelectShipTxnsCols"
+				},
+				{
+					"name": "ShipTrendsPerAccount",
+					"script": "SelectShipTxnsCols, Accounts join(SelectShipTxnsCols@VendorID == Accounts@VendorID,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> ShipTrendsPerAccount"
+				}
+			]
+		}
+	}
+}

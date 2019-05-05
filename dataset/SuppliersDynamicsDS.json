@@ -1,0 +1,271 @@
+{
+	"name": "SuppliersDynamicsDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Dynamics",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DynamicsEntity",
+		"structure": [
+			{
+				"name": "customertypecode",
+				"type": "Int32"
+			},
+			{
+				"name": "address2_addresstypecode",
+				"type": "Int32"
+			},
+			{
+				"name": "merged",
+				"type": "Boolean"
+			},
+			{
+				"name": "territorycode",
+				"type": "Int32"
+			},
+			{
+				"name": "haschildrencode",
+				"type": "Int32"
+			},
+			{
+				"name": "exchangerate",
+				"type": "Decimal"
+			},
+			{
+				"name": "preferredappointmenttimecode",
+				"type": "Int32"
+			},
+			{
+				"name": "isbackofficecustomer",
+				"type": "Boolean"
+			},
+			{
+				"name": "modifiedon",
+				"type": "DateTime"
+			},
+			{
+				"name": "owninguser",
+				"type": "Guid"
+			},
+			{
+				"name": "lastname",
+				"type": "String"
+			},
+			{
+				"name": "donotpostalmail",
+				"type": "Boolean"
+			},
+			{
+				"name": "marketingonly",
+				"type": "Boolean"
+			},
+			{
+				"name": "donotphone",
+				"type": "Boolean"
+			},
+			{
+				"name": "preferredcontactmethodcode",
+				"type": "Int32"
+			},
+			{
+				"name": "educationcode",
+				"type": "Int32"
+			},
+			{
+				"name": "ownerid",
+				"type": "Guid"
+			},
+			{
+				"name": "customersizecode",
+				"type": "Int32"
+			},
+			{
+				"name": "firstname",
+				"type": "String"
+			},
+			{
+				"name": "yomifullname",
+				"type": "String"
+			},
+			{
+				"name": "donotemail",
+				"type": "Boolean"
+			},
+			{
+				"name": "address2_shippingmethodcode",
+				"type": "Int32"
+			},
+			{
+				"name": "fullname",
+				"type": "String"
+			},
+			{
+				"name": "address1_addressid",
+				"type": "Guid"
+			},
+			{
+				"name": "msdyn_gdproptout",
+				"type": "Boolean"
+			},
+			{
+				"name": "address2_freighttermscode",
+				"type": "Int32"
+			},
+			{
+				"name": "statuscode",
+				"type": "Int32"
+			},
+			{
+				"name": "createdon",
+				"type": "DateTime"
+			},
+			{
+				"name": "donotsendmm",
+				"type": "Boolean"
+			},
+			{
+				"name": "donotfax",
+				"type": "Boolean"
+			},
+			{
+				"name": "leadsourcecode",
+				"type": "Int32"
+			},
+			{
+				"name": "creditonhold",
+				"type": "Boolean"
+			},
+			{
+				"name": "transactioncurrencyid",
+				"type": "Guid"
+			},
+			{
+				"name": "address3_addressid",
+				"type": "Guid"
+			},
+			{
+				"name": "donotbulkemail",
+				"type": "Boolean"
+			},
+			{
+				"name": "modifiedby",
+				"type": "Guid"
+			},
+			{
+				"name": "followemail",
+				"type": "Boolean"
+			},
+			{
+				"name": "shippingmethodcode",
+				"type": "Int32"
+			},
+			{
+				"name": "createdby",
+				"type": "Guid"
+			},
+			{
+				"name": "donotbulkpostalmail",
+				"type": "Boolean"
+			},
+			{
+				"name": "parentcustomerid",
+				"type": "Guid"
+			},
+			{
+				"name": "contactid",
+				"type": "Guid"
+			},
+			{
+				"name": "participatesinworkflow",
+				"type": "Boolean"
+			},
+			{
+				"name": "statecode",
+				"type": "Int32"
+			},
+			{
+				"name": "owningbusinessunit",
+				"type": "Guid"
+			},
+			{
+				"name": "address2_addressid",
+				"type": "Guid"
+			},
+			{
+				"name": "mobilephone",
+				"type": "String"
+			},
+			{
+				"name": "birthdate",
+				"type": "DateTime"
+			},
+			{
+				"name": "gendercode",
+				"type": "Int32"
+			},
+			{
+				"name": "emailaddress1",
+				"type": "String"
+			},
+			{
+				"name": "websiteurl",
+				"type": "String"
+			},
+			{
+				"name": "address1_composite",
+				"type": "String"
+			},
+			{
+				"name": "description",
+				"type": "String"
+			},
+			{
+				"name": "timezoneruleversionnumber",
+				"type": "Int32"
+			},
+			{
+				"name": "address1_stateorprovince",
+				"type": "String"
+			},
+			{
+				"name": "jobtitle",
+				"type": "String"
+			},
+			{
+				"name": "address1_country",
+				"type": "String"
+			},
+			{
+				"name": "address1_line1",
+				"type": "String"
+			},
+			{
+				"name": "telephone1",
+				"type": "String"
+			},
+			{
+				"name": "address1_city",
+				"type": "String"
+			},
+			{
+				"name": "address1_postalcode",
+				"type": "String"
+			},
+			{
+				"name": "importsequencenumber",
+				"type": "Int32"
+			},
+			{
+				"name": "overriddencreatedon",
+				"type": "DateTime"
+			},
+			{
+				"name": "address1_line2",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"entityName": "contact"
+		}
+	}
+}

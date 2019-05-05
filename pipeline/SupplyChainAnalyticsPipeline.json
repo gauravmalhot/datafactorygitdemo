@@ -1,0 +1,208 @@
+{
+	"name": "SupplyChainAnalyticsPipeline",
+	"properties": {
+		"description": "Supply Chain Analytics Pipeline",
+		"activities": [
+			{
+				"name": "Suppliers_Dynamics",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DynamicsSource",
+						"query": "<fetch><entity name='contact'><all-attributes/></entity></fetch>"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SuppliersDynamicsDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "GenericDataLakeDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"ADLSDirectory": "supplier",
+							"ADLSFile": "suppliers.csv",
+							"ADLSContainer": "supplychain"
+						}
+					}
+				]
+			},
+			{
+				"name": "Products_SAP",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ProductsSAPDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "GenericDataLakeDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"ADLSDirectory": "products",
+							"ADLSFile": "products.csv",
+							"ADLSContainer": "supplychain"
+						}
+					}
+				]
+			},
+			{
+				"name": "Shipments_SQL",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ShipmentsSQLDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "GenericDataLakeDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"ADLSDirectory": "shipments",
+							"ADLSFile": "shipments.csv",
+							"ADLSContainer": "supplychain"
+						}
+					}
+				]
+			},
+			{
+				"name": "DataPrep",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Suppliers_Dynamics",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Products_SAP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Shipments_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"notebookPath": "/PrepDataNotebook"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SupplyChainAnalytics",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DataPrep",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "SupplyChainAnalytics",
+						"type": "DataFlowReference"
+					}
+				}
+			}
+		]
+	}
+}
